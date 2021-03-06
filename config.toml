@@ -1,0 +1,113 @@
+baseURL = "http://www.example.com"
+title = "没有理想的人不伤心"
+
+theme = "hugo-coder"
+
+defaultContentLanguage = "zh"
+languageCode = "zh"
+
+paginate = 20
+
+pygmentsCodeFences = true
+pygmentsCodeFencesGuessSyntax = true
+pygmentsStyle = "b2"
+
+[params]
+author = "dushixiang"
+avatarURL = "images/avatar.png"
+keywords = "blog,developer,personal"
+
+dateFormat = "January 2, 2006"
+
+hideCopyright = false
+hideCredits = false
+hideFooter = false
+since = 2020
+
+# Git Commit in Footer, uncomment the line below to enable it.
+commit = "https://github.com/luizdepra/hugo-coder/tree/"
+
+rtl = false
+
+# Specify light/dark colorscheme
+# Supported values:
+# "auto" (use preference set by browser)
+# "dark" (dark background, light foreground)
+# "light" (light background, dark foreground) (default)
+colorScheme = "auto"
+
+# Hide the toggle button, along with the associated vertical divider
+hideColorSchemeToggle = false
+
+# Series see also post count
+maxSeeAlsoItems = 5
+
+# Enable Twemoji
+enableTwemoji = true
+
+# Custom CSS
+customCSS = []
+
+# Custom SCSS
+customSCSS = []
+
+# Custom JS
+customJS = []
+
+[taxonomies]
+author = "authors"
+category = "categories"
+series = "series"
+tag = "tags"
+
+[[params.social]]
+icon = "fa fa-github"
+name = "Github"
+url = "https://github.com/dushixiang/"
+weight = 1
+[[params.social]]
+icon = "fa fa-twitter"
+name = "Twitter"
+url = "https://twitter.com/dushixiang/"
+weight = 3
+
+[params.utterances]
+repo = "dushixiang/hugo-comment"
+issueTerm = "pathname"
+label = "评论"
+theme = "github-light"
+
+[languages]
+
+[languages.zh]
+languageName = "简体中文"
+title = "没有理想的人不伤心"
+
+[languages.zh.params]
+author = "dushixiang"
+description = "详细描述"
+footerContent = "<a href='https://beian.miit.gov.cn/'>豫ICP备16012145号-3</a>"
+info = "后端开发，完美主义。"
+keywords = "blog,desenvolvedor,pessoal"
+
+[languages.zh.menu]
+
+[[languages.zh.menu.main]]
+name = "文章"
+url = "posts/"
+weight = 1
+
+[[languages.zh.menu.main]]
+name = "分类"
+url = "categories/"
+weight = 2
+
+[[languages.zh.menu.main]]
+name = "标签"
+url = "tags/"
+weight = 3
+
+[[languages.zh.menu.main]]
+name = "关于"
+url = "about/"
+weight = 4
