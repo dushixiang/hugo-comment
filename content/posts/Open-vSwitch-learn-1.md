@@ -180,8 +180,3 @@ ovs-vsctl list interface <port name>
 ```
 
 接下来我们将使用OVS来实现单机和多台物理服务器下的虚拟VLAN网络。
-
-> 本文首发我的微信公众号：我在对面的角落
-> 欢迎关注，接收第一时间更新通知。
-
-![image](https://oss.typesafe.cn/wx1.png)

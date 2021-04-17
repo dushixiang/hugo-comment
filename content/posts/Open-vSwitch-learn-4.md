@@ -176,8 +176,3 @@ ip netns del ns2
 ovs-vsctl del-br br-int
 ```
 
-> 本文首发我的微信公众号：我在对面的角落
-> 欢迎关注，接收第一时间更新通知。
-
-![欢迎关注微信公众号 接收第一时间更新通知](https://oss.typesafe.cn/wx1.png)
-
