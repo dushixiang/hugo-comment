@@ -1,11 +1,13 @@
 ---
 title: "基于kafka实现延迟队列"
 categories: [ "kafka" ]
-tags: [ "kafka" ]
+tags: [ "kafka","延迟队列" ]
 draft: false
 slug: "kafka-delay-queue"
-date: "2021-04-18 00:08:38"
+date: "2021-04-18T00:08:38+08:00"
 ---
+
+
 
 # 基于kafka实现延迟队列
 
