@@ -12,4 +12,4 @@ date: "2021-01-01 00:00:00"
 - 微信公众号：
 
 
-![搜索框传播样式-标准色版.png](https://oss.typesafe.cn/wx1.png)
+![搜索框传播样式-标准色版.png](https://oss.typesafe.cn/wx.jpeg)
