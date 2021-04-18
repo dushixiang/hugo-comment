@@ -11,7 +11,7 @@ date: "2021-04-18T00:08:38+08:00"
 
 # 基于kafka实现延迟队列
 
-kafka作为一个使用广泛的消息队列，很多人都不会陌生，但当你在网上搜索“kafka 延迟队列”，出现的都是一些讲解时间轮或者只是提供了一些思路，并没有一份真实可用的代码实现，今天我们就来打破这个现象，提供一份可测试的代码，抛砖引玉，吸引更多的大神来分享。
+kafka作为一个使用广泛的消息队列，很多人都不会陌生，但当你在网上搜索“kafka 延迟队列”，出现的都是一些讲解时间轮或者只是提供了一些思路，并没有一份真实可用的代码实现，今天我们就来打破这个现象，提供一份可运行的代码，抛砖引玉，吸引更多的大神来分享。
 
 ### 基于kafka如何实现延迟队列？
 
@@ -24,7 +24,7 @@ kafka作为一个使用广泛的消息队列，很多人都不会陌生，但当
 
 就像画一匹马一样简单。
 
-![怎样画马](https://gitee.com/dushixiang/typesafe/raw/master/uPic/RkkP8w.jpg)
+![怎样画马](https://oss.typesafe.cn/uPic/怎样画马.jpeg)
 
 方案是好的，但是我们还需要更多细节。
 
@@ -42,13 +42,13 @@ kafka作为一个使用广泛的消息队列，很多人都不会陌生，但当
 
 这是因为在轮询kafka拉取消息的时候，它会返回由`max.poll.records`配置指定的一批消息，但是当程序代码不能在`max.poll.interval.ms`配置的期望时间内处理这些消息的话，kafka就会认为这个消费者已经挂了，会进行`rebalance`，同时你这个消费者就无法再拉取到任何消息了。
 
-举个例子：当你需要需要一个24小时的延迟消息队列，在代码里面写下了`Thread.sleep(1000*60*60*24);`，为了不发生`rebalance`，你把`max.poll.interval.ms` 也改成了`1000*60*60*24`，这个时候你或许会感觉到一丝丝的怪异，我是谁？我在哪？我为什么要写出来这样的代码？
+举个例子：当你需要一个24小时的延迟消息队列，在代码里面写下了`Thread.sleep(1000*60*60*24);`，为了不发生`rebalance`，你把`max.poll.interval.ms` 也改成了`1000*60*60*24`，这个时候你或许会感觉到一丝丝的怪异，我是谁？我在哪？我为什么要写出来这样的代码？
 
 **其实我们可以更优雅的处理这个问题。**
 
 KafkaConsumer 提供了暂停和恢复的API函数，调用消费者的暂停方法后就无法再拉取到新的消息，同时长时间不消费kafka也不会认为这个消费者已经挂掉了。另外为了能够更加优雅，我们会启动一个定时器来替换`sleep`。，完整流程如下图，当消费者发现消息不满足条件时，我们就暂停消费者，并把偏移量seek到上一次消费的位置以便等待下一个周期再次消费这条消息。
 
-![kafka-delay-queue](https://gitee.com/dushixiang/typesafe/raw/master/uPic/kafka-delay-queue.png)
+![kafka-delay-queue](https://oss.typesafe.cn/uPic/kafka-delay-queue.png)
 
 ### Java代码实现
 
@@ -202,6 +202,8 @@ public class DelayQueueTest {
 ```
 
 同时启动一个消费者监听topic `target`，在一分钟后，将会收到一条 key="key1", value="value1"的数据。
+
+[源代码地址](https://github.com/dushixiang/kafka-map/blob/master/src/test/java/cn/typesafe/km/DelayQueueTest.java)
 
 ### 还需要做什么？
 
