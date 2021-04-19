@@ -1,4 +1,4 @@
-baseURL = "http://www.example.com"
+baseURL = "https://typesafe.cn"
 title = "没有理想的人不伤心"
 
 theme = "hugo-coder"
