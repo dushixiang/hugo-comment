@@ -1,5 +1,5 @@
 ---
-title: "使用libvirt-java采集KVM虚拟机资源利用信息"
+title: "使用libvirt-java采集KVM虚拟机状态信息"
 categories: [ "虚拟化" ]
 tags: [ "Java","libvirt" ]
 draft: false
@@ -7,14 +7,14 @@ slug: "collect-vm-stats-by-libvirt-java"
 date: "2021-05-19T20:18:20+08:00"
 ---
 
-虚拟化开发相较于普通开发是一个比较冷门的方向，大多数都是使用Python开发，其中利用Java做虚拟化的更是少之又少，资料更是少的可怜，为了实现需求我也是踩了不少坑，今天就为大家分享一下如何使用 `libvirt-java` 来采集KVM虚拟机的资源使用信息。
+虚拟化开发相较于普通开发是一个冷门的方向，大多数是使用Python开发，其中使用Java来做虚拟化的更是少之又少，资料更是少的可怜，为了实现需求我也是踩了不少坑，今天就为大家分享一下如何使用 `libvirt-java` 来采集KVM虚拟机的资源使用信息。
 
 ### CPU使用率
 
 `libvirt`并没有直接提供获取虚拟机CPU使用率的接口，需要我们自己来计算，网上分享的代码或者公式五花八门，大部分都是错误的，经过我的测试，找到了一个相对准确的计算公式。
 
 ```latex
-cpu_usage = (cpu_time_now - cpu_time_t_second_age) * 100 / (t * vCpus * 10^9)
+cpu_usage = (cpu_time_now - cpu_time_t_second_ago) * 100 / (t * vCpus * 10^9)
 ```
 
 Java代码如下
@@ -113,3 +113,4 @@ for (Element disk : disks) {
 }
 ```
 
+至此采集虚拟机状态信息算是告一段落，学的越多才发现不会的越多...
