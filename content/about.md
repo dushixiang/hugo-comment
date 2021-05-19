@@ -7,7 +7,6 @@ date: "2021-01-01 00:00:00"
 ---
 
 - 后端开发，完美主义。擅长Java，偶尔写Python、Golang。
-- 微信: type-safe
 - Github: https://github.com/dushixiang
 - 微信公众号：
 
