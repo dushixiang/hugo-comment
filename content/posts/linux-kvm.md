@@ -1,5 +1,5 @@
 ---
-title: "Linux虚拟化"
+title: "Linux虚拟化技术KVM"
 categories: [ "虚拟化" ]
 tags: [ "linux","kvm" ]
 draft: false
