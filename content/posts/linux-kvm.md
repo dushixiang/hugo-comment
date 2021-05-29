@@ -26,13 +26,13 @@ yum install -y qemu-kvm libvirt virt-install bridge-utils
 | virt-install | 用来创建虚拟机的命令行工具。                                 |
 | bridge-utils | Linux网桥，用来配置虚拟机的桥接网络。                        |
 
-**kvm、qemu和libvirt到底有什么关系？**
+**kvm、qemu、qemu-kvm和libvirt到底有什么关系？**
 
-KVM（Kernel Virtual Machine）是Linux的一个内核驱动模块，它需要CPU的支持，采用硬件辅助虚拟化技术Intel-VT，AMD-V，内存的相关如Intel的EPT和AMD的RVI技术，使得它能够让Linux主机成为一个Hypervisor（虚拟机监控器）。
+KVM（Kernel Virtual Machine）是Linux的一个内核驱动模块，它需要CPU的支持，采用硬件辅助虚拟化技术Intel-VT、AMD-V；内存相关如Intel的EPT和AMD的RVI技术，使得它能够让Linux主机成为一个Hypervisor（虚拟机监控器）。
 
 QEMU是一个纯软件实现的虚拟机，它可以模拟CPU、内存、磁盘等其他硬件，让虚拟机认为自己底层就是硬件，其实这些都是QEMU模拟的，虚拟机的所有操作都要经过QEMU转译一层，也就导致了QEMU本身的性能较差。
 
-qemu-kvm是QEMU整合了KVM，把CPU虚拟化和内存虚拟化交给了KVM来做，自己来模拟IO设备，例如网卡和磁盘。这一套组合拳打下来，性能损失大大降低，大概在1%-2%之间。
+qemu-kvm是QEMU整合了KVM，把CPU虚拟化和内存虚拟化交给了KVM来做，自己来模拟IO设备，例如网卡和磁盘。这一套组合拳打下来，性能损失大大降低，相较于直接使用硬件，带来的损耗大概在1%-2%之间。
 
 libvirt是目前使用最为广泛的对KVM虚拟机进行管理的工具和API。Libvirtd是一个daemon进程，可以被本地的virsh调用，也可以被远程的virsh调用，Libvirtd调用qemu-kvm操作虚拟机。
 
@@ -63,6 +63,8 @@ yum install -y virt-manager
 
    > 还有一种模式在openstack等云平台上使用较为广泛，网桥上绑定的物理网卡没有IP，对应交换机配置端口为trunk模式，虚拟机 端口连接到网桥上，并配置端口不同的VLAN tag以达到隔离和互联的目的。
 
+NAT模式和主机模式都无需单独配置，接下来我们看下如何配置桥接网络。
+
 ### 配置桥接网络
 
 物理网卡绑定到网桥上之后就会导致网络断开，因此我们需要把原IP配置到网桥上。
@@ -74,9 +76,28 @@ cd /etc/sysconfig/network-scripts/
 cp ifcfg-enp134s0f0 ifcfg-br0
 ```
 
-修改 `ifcfg-br0` 中的 `TYPE=Ethernet`  为 ` TYPE=Bridge`
+修改 `ifcfg-br0` 中的 `TYPE=Ethernet`  为 ` TYPE=Bridge`，最终效果如下：
 
-修改`ifcfg-enp134s0f0` 文件删除其中的 `IPADDR=`  `NETMASK=`  `GATEWAY=` 行，并在最后添加上`BRIDGE=br0`。
+```bash
+DEVICE=br0
+ONBOOT=yes
+BOOTPROTO=none
+TYPE=Bridge
+IPADDR=172.16.0.52
+PREFIX=16
+GATEWAY=172.16.0.1
+DNS1=114.114.114.114
+```
+
+修改`ifcfg-enp134s0f0` 文件删除其中的 `IPADDR=`  `NETMASK=`  `GATEWAY=` 行，并在最后添加上`BRIDGE=br0`，最终效果如下：
+
+```bash
+DEVICE="enp134s0f0"
+ONBOOT=yes
+BOOTPROTO=none
+TYPE=Ethernet
+BRIDGE=br0
+```
 
 最后重启网络。
 
