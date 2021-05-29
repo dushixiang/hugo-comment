@@ -105,6 +105,25 @@ BRIDGE=br0
 systemctl restart network
 ```
 
+查看网络信息也可以看到IP配置到了网桥上，网桥上又关联了物理网卡。
+
+```bash
+[root@localhost network-scripts]# ip a
+8: enp134s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP group default qlen 1000
+    link/ether 74:a4:b5:01:04:22 brd ff:ff:ff:ff:ff:ff
+    inet6 fe80::76a4:b5ff:fe01:422/64 scope link 
+       valid_lft forever preferred_lft forever
+17: br0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 74:a4:b5:01:04:22 brd ff:ff:ff:ff:ff:ff
+    inet 172.16.0.52/16 brd 172.16.255.255 scope global br0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::76a4:b5ff:fe01:422/64 scope link 
+       valid_lft forever preferred_lft forever
+[root@localhost network-scripts]# brctl show
+bridge name     bridge id               STP enabled     interfaces
+br0             8000.74a4b5010422       no              enp134s0f0
+```
+
 ### 创建虚拟机
 
 创建虚拟机有三种选择
