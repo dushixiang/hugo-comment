@@ -7,7 +7,7 @@ slug: "linux-kvm"
 date: "2021-05-29T17:07:00+08:00"
 ---
 
-在Windows平台上我们习惯于使用VmWare或者virtual box来实现虚拟化，虽然它们也都拥有Linux版本，但大多数企业都选择了使用KVM来做虚拟化，因此学习掌握KVM是一项必不可少的技能。
+在Windows平台上我们习惯于使用VmWare或者virtual box来实现虚拟化，虽然它们拥有Linux版本，但大多数企业都选择了使用KVM来做Linux平台的虚拟化，因此学习掌握KVM是一项必不可少的技能。
 
 ### 安装KVM
 
@@ -26,13 +26,13 @@ yum install -y qemu-kvm libvirt virt-install bridge-utils
 | virt-install | 用来创建虚拟机的命令行工具。                                 |
 | bridge-utils | Linux网桥，用来配置虚拟机的桥接网络。                        |
 
-**kvm、qemu和libvirt到底有啥关系？**
+**kvm、qemu和libvirt到底有什么关系？**
 
 KVM（Kernel Virtual Machine）是Linux的一个内核驱动模块，它需要CPU的支持，采用硬件辅助虚拟化技术Intel-VT，AMD-V，内存的相关如Intel的EPT和AMD的RVI技术，使得它能够让Linux主机成为一个Hypervisor（虚拟机监控器）。
 
 QEMU是一个纯软件实现的虚拟机，它可以模拟CPU、内存、磁盘等其他硬件，让虚拟机认为自己底层就是硬件，其实这些都是QEMU模拟的，虚拟机的所有操作都要经过QEMU转译一层，也就导致了QEMU本身的性能较差。
 
-qemu-kvm则是QEMU整合了KVM，把CPU虚拟化和内存虚拟化交给了KVM来做。QEMU来模拟IO设备，例如网卡和磁盘。这一套组合拳打下来，性能损失大大降低，大概在1%-2%之间。
+qemu-kvm则是QEMU整合了KVM，把CPU虚拟化和内存虚拟化交给了KVM来做，自己来模拟IO设备，例如网卡和磁盘。这一套组合拳打下来，性能损失大大降低，大概在1%-2%之间。
 
 libvirt是目前使用最为广泛的对KVM虚拟机进行管理的工具和API。Libvirtd是一个daemon进程，可以被本地的virsh调用，也可以被远程的virsh调用，Libvirtd调用qemu-kvm操作虚拟机。
 
