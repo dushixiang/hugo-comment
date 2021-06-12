@@ -24,12 +24,12 @@ OVS提供了相关命令来配置或删除端口镜像，下面我们来实验�
 - select_all：布尔类型（true，false）。设置为 true 时，表示此网桥上的所有流量。
 - select_dst_port：字符串（端口名称）。表示此端口接收的所有流量。
 - select_src_port：字符串（端口名称）。表示此端口发送的所有流量。
-- select_vlan：整形（0-4095）。表示携带此VLAN标签的流量。
+- select_vlan：整型（0-4095）。表示携带此VLAN标签的流量。
 
 #### 镜像目的
 
 - output_port：字符串（端口名称）。接收流量报文的观察端口。
-- output_vlan：整形（0-4095）。表示只修改VLAN标签，原VLAN标签会被剥离。
+- output_vlan：整型（0-4095）。表示只修改VLAN标签，原VLAN标签会被剥离。
 
 ### 基础操作命令
 
