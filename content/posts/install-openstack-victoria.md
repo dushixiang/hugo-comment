@@ -11,7 +11,7 @@ date: "2021-06-12T00:00:00+08:00"
 
 # 实验环境
 
-此次实验使用到了三台虚拟机，都是使用centos8系统，一台机器当作控制和网络节点，另外两台当作计算节点，使用OVS+VLAN的网络模式，eth0作为管理网络，eth1互相连接到openvswitch上模拟trunk网卡，controller多增加一个eth2用于访问外部网络。
+此次实验使用到了三台虚拟机，都是使用centos8系统，一台机器当作控制和网络节点，另外两台当作计算节点，使用OVS+VLAN的网络模式，eth0作为管理网络，eth1互相连接到OVS网桥上模拟trunk网卡，controller多增加一个eth2用于访问外部网络。
 
 | 节点        | 作用               | eth0          | eth1 | eth2       |
 | ----------- | ------------------ | ------------- | ---- | ---------- |
@@ -40,13 +40,13 @@ yum install -y qemu-kvm libvirt virt-install bridge-utils virt-manager dejavu-lg
 systemctl enable libvirtd && systemctl start libvirtd
 ```
 
-安装Open vSwitch
+安装OVS
 
 ```bash
 yum install openvswitch
 ```
 
-启动Open vSwitch
+启动OVS
 
 ```bash
 systemctl enable openvswitch && systemctl start openvswitch
@@ -999,7 +999,7 @@ echo "nova ALL = (root) NOPASSWD: ALL" > /etc/sudoers.d/nova
    EOF
    ```
 
-7. 配置Open vSwitch组件
+7. 配置OVS组件
 
    ```bash
    cat > /etc/neutron/plugins/ml2/openvswitch_agent.ini <<EOF
