@@ -175,9 +175,9 @@ hostnamectl set-hostname compute-102
 添加以下内容
 
 ```bash
-172.16.10.100	controller
-172.16.10.101   compute-101
-172.16.10.102	compute-102
+172.16.10.100 controller
+172.16.10.101 compute-101
+172.16.10.102 compute-102
 ```
 
 ### 关闭防火墙
